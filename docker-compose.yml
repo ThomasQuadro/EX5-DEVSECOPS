@@ -1,0 +1,11 @@
+services:
+  checkov:
+    build: .
+    image: devsecops-ex5-checkov
+    volumes:
+      - ./target:/tf:ro
+      - ./reports:/reports
+    entrypoint: ["sh", "-c"]
+
+    command:
+      - 'checkov -d /tf/terraform/aws -o json > /reports/checkov-report.json || true; checkov -d /tf/terraform/aws --compact || true'
